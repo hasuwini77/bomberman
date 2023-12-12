@@ -10,14 +10,20 @@ body {
 
 .game-container {
   display: grid;
-  grid-template-columns: repeat(7, 70px); /* Adjust the size based on your preference */
+  grid-template-columns: repeat(7, 70px);
   grid-template-rows: repeat(7, 70px);
-  gap: 2px; /* Gap between grid squares */
+  gap: 2px;
 }
 
 .game-container div {
-  width: 70px; /* Adjust the size based on your preference */
+  width: 70px;
   height: 70px;
   background-color: #fff;
   border: 1px solid #ccc;
+}
+
+.player-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
 }

@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   createGameBoard();
+  generatePlayer1();
 });
 // Declaring variables
 const gameContainer = document.querySelector(".game-container");
@@ -20,8 +21,16 @@ function createGameBoard() {
 const generatePlayer1 = () => {
   let playerRow = rowLabels[Math.floor(Math.random() * rowLabels.length)];
   let playerCol = colLabels[Math.floor(Math.random() * colLabels.length)];
-  playerPosition = `${playerRow}${playerCol}`;
-  console.log(playerPosition);
-};
+  let playerXY = `${playerRow}${playerCol}`;
 
-generatePlayer1();
+  let playerDiv = document.querySelector(`.grid-square.${playerXY}`);
+
+  if (playerDiv) {
+    const playerImage = document.createElement("img");
+    playerImage.src = "./images/bomberman1.jpeg";
+    playerImage.classList.add("player-image");
+    playerDiv.appendChild(playerImage);
+  } else {
+    console.error(`Element with class .grid-square.${playerXY} not found.`);
+  }
+};
