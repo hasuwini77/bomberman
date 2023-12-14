@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   moveLeft();
   moveRight();
   moveUp();
+  moveDown();
 });
 
 const gameContainer = document.querySelector(".game-container");
@@ -120,6 +121,37 @@ const moveUp = () => {
           playerImage.classList.add("player-image");
           UpDiv.appendChild(playerImage);
           playerXY = UpXY;
+        } else {
+          console.log("We cannot move there");
+        }
+      } else {
+        alert("Cannot move UP, at the edge of the board.");
+      }
+    }
+  });
+};
+
+const moveDown = () => {
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowDown") {
+      console.log("ArrowDown key pressed!");
+
+      // Check if moving up is within the game board boundaries
+      if (playerRow !== rowLabels[6]) {
+        let playerDiv = document.querySelector(`.grid-square.${playerXY}`);
+        playerDiv.innerHTML = "";
+        let currentRowIndex = rowLabels.indexOf(playerRow);
+        let newRowIndex = Math.min(currentRowIndex + 1, 6);
+        playerRow = rowLabels[newRowIndex];
+        let DownXY = `${playerRow}${playerCol}`;
+        let DownDiv = document.querySelector(`.grid-square.${DownXY}`);
+
+        if (DownDiv) {
+          const playerImage = document.createElement("img");
+          playerImage.src = "./images/bomberman1.jpeg";
+          playerImage.classList.add("player-image");
+          DownDiv.appendChild(playerImage);
+          playerXY = DownXY;
         } else {
           console.log("We cannot move there");
         }
