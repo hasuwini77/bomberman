@@ -1,6 +1,7 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function DaGame() {
   createGameBoard();
   generatePlayer1();
+  generateBomb();
   moveLeft();
   moveRight();
   moveUp();
@@ -13,6 +14,9 @@ const colLabels = ["1", "2", "3", "4", "5", "6", "7"];
 let playerRow = rowLabels[Math.floor(Math.random() * rowLabels.length)];
 let playerCol = colLabels[Math.floor(Math.random() * colLabels.length)];
 let playerXY = `${playerRow}${playerCol}`;
+let bombRow = rowLabels[Math.floor(Math.random() * rowLabels.length)];
+let bombCol = colLabels[Math.floor(Math.random() * colLabels.length)];
+let bombXY = `${bombRow}${bombCol}`;
 
 function createGameBoard() {
   for (let row = 0; row < 7; row++) {
@@ -37,7 +41,8 @@ const generatePlayer1 = () => {
     console.error(`Element with class .grid-square.${playerXY} not found.`);
   }
 };
-// mouvement part
+//  M O V E M E N T
+//   P A R T
 const moveLeft = () => {
   document.addEventListener("keydown", (event) => {
     if (event.key === "ArrowLeft") {
@@ -160,4 +165,25 @@ const moveDown = () => {
       }
     }
   });
+};
+
+// BOMB GENERATION
+const generateBomb = () => {
+  let playerDiv = document.querySelector(`.grid-square.${playerXY}`);
+  let bombDiv = document.querySelector(`.grid-square.${bombXY}`);
+
+  // Check if bomb is in the same position as the player
+  while (bombDiv === playerDiv) {
+    // Regenerate bomb coordinates
+    bombRow = rowLabels[Math.floor(Math.random() * rowLabels.length)];
+    bombCol = colLabels[Math.floor(Math.random() * colLabels.length)];
+    bombXY = `${bombRow}${bombCol}`;
+    bombDiv = document.querySelector(`.grid-square.${bombXY}`);
+  }
+
+  // Generate the bomb image
+  const bombImage = document.createElement("img");
+  bombImage.src = "./images/bomb.png";
+  bombImage.classList.add("bomb-image");
+  bombDiv.appendChild(bombImage);
 };

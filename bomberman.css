@@ -24,15 +24,21 @@ body {
   background-color: blanchedalmond;
   border: 1px solid #ccc;
 }
-
+img.bomb-image,
 img.player-image {
   display: flex;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
   mix-blend-mode: hard-light;
 }
+img.player-image {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+}
 
+img.bomb-image {
+  width: 50px;
+  height: 50px;
+}
 .player-image {
   background-color: cadetblue;
 }
