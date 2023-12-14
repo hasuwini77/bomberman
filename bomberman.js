@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function DaGame() {
   createGameBoard();
   generatePlayer1();
-  generateBomb();
+  generateBomb(checkGameOver);
   moveLeft();
   moveRight();
   moveUp();
@@ -64,6 +64,7 @@ const moveLeft = () => {
           playerImage.classList.add("player-image");
           leftDiv.appendChild(playerImage);
           playerXY = leftXY;
+          checkGameOver();
         } else {
           console.log("We cannot move there");
         }
@@ -95,6 +96,7 @@ const moveRight = () => {
           playerImage.classList.add("player-image");
           RightDiv.appendChild(playerImage);
           playerXY = RightXY;
+          checkGameOver();
         } else {
           console.log("We cannot move there");
         }
@@ -126,6 +128,7 @@ const moveUp = () => {
           playerImage.classList.add("player-image");
           UpDiv.appendChild(playerImage);
           playerXY = UpXY;
+          checkGameOver();
         } else {
           console.log("We cannot move there");
         }
@@ -157,6 +160,7 @@ const moveDown = () => {
           playerImage.classList.add("player-image");
           DownDiv.appendChild(playerImage);
           playerXY = DownXY;
+          checkGameOver();
         } else {
           console.log("We cannot move there");
         }
@@ -168,7 +172,7 @@ const moveDown = () => {
 };
 
 // BOMB GENERATION
-const generateBomb = () => {
+const generateBomb = (callback) => {
   let playerDiv = document.querySelector(`.grid-square.${playerXY}`);
   let bombDiv = document.querySelector(`.grid-square.${bombXY}`);
 
@@ -186,4 +190,22 @@ const generateBomb = () => {
   bombImage.src = "./images/bomb.png";
   bombImage.classList.add("bomb-image");
   bombDiv.appendChild(bombImage);
+  if (callback) {
+    callback(bombXY);
+  }
+};
+
+const gameWinPage = () => {
+  gameContainer.innerHTML = " <img src='https://media1.giphy.com/media/t3sZxY5zS5B0z5zMIz/giphy.gif?cid=ecf05e475gutqqclngrqibz95la1wnszu4smiue2vdejvlse&ep=v1_gifs_search&rid=giphy.gif&ct=g ' alt='GIF Win Image'>";
+};
+
+const gameOverPage = () => {
+  gameContainer.innerHTML = " <img src='https://media0.giphy.com/media/l3q2J7KgtglQ5GQH6/giphy.gif?cid=ecf05e47ulj9q0b2f9nfa1meuhiq0tq0v2algnrkcdjjfe6c&ep=v1_gifs_search&rid=giphy.gif&ct=g' alt='GIF Lose Image'>";
+};
+
+const checkGameOver = () => {
+  if (playerXY === bombXY) {
+    alert("Game Over!");
+    gameOverPage();
+  }
 };
