@@ -42,3 +42,14 @@ img.bomb-image {
 .player-image {
   background-color: cadetblue;
 }
+
+img.game-image {
+  height: 400px;
+}
+
+.game-image {
+  display: block;
+  margin: auto;
+  grid-column: span 7;
+  text-align: center;
+}
