@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   generatePlayer1();
   moveLeft();
   moveRight();
+  moveUp();
 });
 
 const gameContainer = document.querySelector(".game-container");
@@ -61,7 +62,7 @@ const moveLeft = () => {
           console.log("We cannot move there");
         }
       } else {
-        console.log("Cannot move left, at the edge of the board.");
+        alert("Cannot move left, at the edge of the board.");
       }
     }
   });
@@ -72,7 +73,7 @@ const moveRight = () => {
     if (event.key === "ArrowRight") {
       console.log("ArrowRight key pressed!");
 
-      // Check if moving left is within the game board boundaries
+      // Check if moving right is within the game board boundaries
       if (playerCol < 7) {
         let playerDiv = document.querySelector(`.grid-square.${playerXY}`);
         playerDiv.innerHTML = "";
@@ -92,7 +93,38 @@ const moveRight = () => {
           console.log("We cannot move there");
         }
       } else {
-        console.log("Cannot move right, at the edge of the board.");
+        alert("Cannot move right, at the edge of the board.");
+      }
+    }
+  });
+};
+
+const moveUp = () => {
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowUp") {
+      console.log("ArrowUp key pressed!");
+
+      // Check if moving up is within the game board boundaries
+      if (playerRow !== rowLabels[0]) {
+        let playerDiv = document.querySelector(`.grid-square.${playerXY}`);
+        playerDiv.innerHTML = "";
+        let currentRowIndex = rowLabels.indexOf(playerRow);
+        let newRowIndex = Math.max(currentRowIndex - 1, 0);
+        playerRow = rowLabels[newRowIndex];
+        let UpXY = `${playerRow}${playerCol}`;
+        let UpDiv = document.querySelector(`.grid-square.${UpXY}`);
+
+        if (UpDiv) {
+          const playerImage = document.createElement("img");
+          playerImage.src = "./images/bomberman1.jpeg";
+          playerImage.classList.add("player-image");
+          UpDiv.appendChild(playerImage);
+          playerXY = UpXY;
+        } else {
+          console.log("We cannot move there");
+        }
+      } else {
+        alert("Cannot move UP, at the edge of the board.");
       }
     }
   });
