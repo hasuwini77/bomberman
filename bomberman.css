@@ -16,14 +16,23 @@ body {
 }
 
 .game-container div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 70px;
   height: 70px;
-  background-color: #fff;
+  background-color: blanchedalmond;
   border: 1px solid #ccc;
 }
 
-.player-image {
+img.player-image {
+  display: flex;
   width: 60px;
   height: 60px;
   border-radius: 50%;
+  mix-blend-mode: hard-light;
+}
+
+.player-image {
+  background-color: cadetblue;
 }
