@@ -37,6 +37,7 @@ img.player-image {
 }
 
 img.bomb-image {
+  display: none;
   width: 50px;
   height: 50px;
 }
@@ -44,11 +45,12 @@ img.bomb-image {
   background-color: cadetblue;
 }
 
-img.game-image {
+img.game-image-lose {
   height: 400px;
 }
 
-.game-image {
+.game-image-lose,
+.game-image-win {
   display: block;
   margin: auto;
   grid-column: span 7;
@@ -89,6 +91,11 @@ p {
 p.instructions-para {
   animation: blink 2.7s infinite;
   transition: all 3s;
+}
+
+.visited {
+  background-color: #838383;
+  pointer-events: none;
 }
 
 footer {

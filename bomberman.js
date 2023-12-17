@@ -38,39 +38,20 @@ const generatePlayer1 = () => {
     playerImage.src = "./images/bomberman1.jpeg";
     playerImage.classList.add("player-image");
     playerDiv.appendChild(playerImage);
+    markVisitedSquare(playerRow, playerCol);
   } else {
     console.error(`Element with class .grid-square.${playerXY} not found.`);
   }
 };
-//  M O V E M E N T
-//   P A R T
+
+// Movement functions
+
 const moveLeft = () => {
   document.addEventListener("keydown", (event) => {
     if (event.key === "ArrowLeft") {
-      console.log("ArrowLeft key pressed!");
-      // Check if moving left is within the game board boundaries
       if (playerCol > 1) {
-        let playerDiv = document.querySelector(`.grid-square.${playerXY}`);
-        playerDiv.innerHTML = "";
-
-        playerCol--; // Update the player's column position
-        moveCount++;
-        let moveCounter = (document.querySelector("h2").textContent = ` Counter: ${moveCount} moves`);
-        let leftXY = `${playerRow}${playerCol}`;
-        let leftDiv = document.querySelector(`.grid-square.${leftXY}`);
-
-        if (leftDiv) {
-          const playerImage = document.createElement("img");
-          playerImage.src = "./images/bomberman1.jpeg";
-          playerImage.classList.add("player-image");
-          leftDiv.appendChild(playerImage);
-          playerXY = leftXY;
-          checkGameOver();
-          checkGameWin();
-          instructionsRemover();
-        } else {
-          console.log("We cannot move there");
-        }
+        let leftXY = `${playerRow}${playerCol - 1}`;
+        handleMove(leftXY);
       } else {
         alert("Cannot move left, at the edge of the board.");
       }
@@ -81,31 +62,9 @@ const moveLeft = () => {
 const moveRight = () => {
   document.addEventListener("keydown", (event) => {
     if (event.key === "ArrowRight") {
-      console.log("ArrowRight key pressed!");
-
-      // Check if moving right is within the game board boundaries
       if (playerCol < 7) {
-        let playerDiv = document.querySelector(`.grid-square.${playerXY}`);
-        playerDiv.innerHTML = "";
-
-        playerCol++;
-        moveCount++;
-        let moveCounter = (document.querySelector("h2").textContent = ` Counter: ${moveCount} moves`);
-        let RightXY = `${playerRow}${playerCol}`;
-        let RightDiv = document.querySelector(`.grid-square.${RightXY}`);
-
-        if (RightDiv) {
-          const playerImage = document.createElement("img");
-          playerImage.src = "./images/bomberman1.jpeg";
-          playerImage.classList.add("player-image");
-          RightDiv.appendChild(playerImage);
-          playerXY = RightXY;
-          checkGameOver();
-          checkGameWin();
-          instructionsRemover();
-        } else {
-          console.log("We cannot move there");
-        }
+        let rightXY = `${playerRow}${parseInt(playerCol) + 1}`;
+        handleMove(rightXY);
       } else {
         alert("Cannot move right, at the edge of the board.");
       }
@@ -116,32 +75,10 @@ const moveRight = () => {
 const moveUp = () => {
   document.addEventListener("keydown", (event) => {
     if (event.key === "ArrowUp") {
-      console.log("ArrowUp key pressed!");
-
-      // Check if moving up is within the game board boundaries
-      if (playerRow !== rowLabels[0]) {
-        let playerDiv = document.querySelector(`.grid-square.${playerXY}`);
-        playerDiv.innerHTML = "";
-        let currentRowIndex = rowLabels.indexOf(playerRow);
-        let newRowIndex = Math.max(currentRowIndex - 1, 0);
-        playerRow = rowLabels[newRowIndex];
-        let UpXY = `${playerRow}${playerCol}`;
-        let UpDiv = document.querySelector(`.grid-square.${UpXY}`);
-        moveCount++;
-        let moveCounter = (document.querySelector("h2").textContent = ` Counter: ${moveCount} moves`);
-
-        if (UpDiv) {
-          const playerImage = document.createElement("img");
-          playerImage.src = "./images/bomberman1.jpeg";
-          playerImage.classList.add("player-image");
-          UpDiv.appendChild(playerImage);
-          playerXY = UpXY;
-          checkGameOver();
-          checkGameWin();
-          instructionsRemover();
-        } else {
-          console.log("We cannot move there");
-        }
+      if (rowLabels.indexOf(playerRow) !== 0) {
+        let upRow = rowLabels[rowLabels.indexOf(playerRow) - 1];
+        let upXY = `${upRow}${playerCol}`;
+        handleMove(upXY);
       } else {
         alert("Cannot move UP, at the edge of the board.");
       }
@@ -152,46 +89,51 @@ const moveUp = () => {
 const moveDown = () => {
   document.addEventListener("keydown", (event) => {
     if (event.key === "ArrowDown") {
-      console.log("ArrowDown key pressed!");
-
-      // Check if moving up is within the game board boundaries
-      if (playerRow !== rowLabels[6]) {
-        let playerDiv = document.querySelector(`.grid-square.${playerXY}`);
-        playerDiv.innerHTML = "";
-        let currentRowIndex = rowLabels.indexOf(playerRow);
-        let newRowIndex = Math.min(currentRowIndex + 1, 6);
-        playerRow = rowLabels[newRowIndex];
-        let DownXY = `${playerRow}${playerCol}`;
-        let DownDiv = document.querySelector(`.grid-square.${DownXY}`);
-        moveCount++;
-        let moveCounter = (document.querySelector("h2").textContent = ` Counter: ${moveCount} moves`);
-
-        if (DownDiv) {
-          const playerImage = document.createElement("img");
-          playerImage.src = "./images/bomberman1.jpeg";
-          playerImage.classList.add("player-image");
-          DownDiv.appendChild(playerImage);
-          playerXY = DownXY;
-          checkGameOver();
-          checkGameWin();
-          instructionsRemover();
-        } else {
-          console.log("We cannot move there");
-        }
+      if (rowLabels.indexOf(playerRow) !== 6) {
+        let downRow = rowLabels[rowLabels.indexOf(playerRow) + 1];
+        let downXY = `${downRow}${playerCol}`;
+        handleMove(downXY);
       } else {
-        alert("Cannot move UP, at the edge of the board.");
+        alert("Cannot move DOWN, at the edge of the board.");
       }
     }
   });
 };
 
+const handleMove = (newXY) => {
+  if (!hasVisited(newXY)) {
+    let playerDiv = document.querySelector(`.grid-square.${playerXY}`);
+    playerDiv.innerHTML = "";
+
+    let newDiv = document.querySelector(`.grid-square.${newXY}`);
+    moveCount++;
+    let moveCounter = (document.querySelector("h2").textContent = ` Counter: ${moveCount} moves`);
+
+    if (newDiv) {
+      const playerImage = document.createElement("img");
+      playerImage.src = "./images/bomberman1.jpeg";
+      playerImage.classList.add("player-image");
+      newDiv.appendChild(playerImage);
+      playerRow = newXY.charAt(0);
+      playerCol = newXY.charAt(1);
+      playerXY = newXY;
+      markVisitedSquare(playerRow, playerCol);
+      checkGameOver();
+      checkGameWin();
+      instructionsRemover();
+    } else {
+      console.log("We cannot move there");
+    }
+  } else {
+    alert("Already visited this square");
+  }
+};
 // BOMB GENERATION
 const generateBomb = (callback) => {
-  let playerDiv = document.querySelector(`.grid-square.${playerXY}`);
   let bombDiv = document.querySelector(`.grid-square.${bombXY}`);
 
   // Check if bomb is in the same position as the player
-  while (bombDiv === playerDiv) {
+  while (bombXY === playerXY) {
     // Regenerate bomb coordinates
     bombRow = rowLabels[Math.floor(Math.random() * rowLabels.length)];
     bombCol = colLabels[Math.floor(Math.random() * colLabels.length)];
@@ -203,18 +145,26 @@ const generateBomb = (callback) => {
   const bombImage = document.createElement("img");
   bombImage.src = "./images/bomb.png";
   bombImage.classList.add("bomb-image");
-  bombDiv.appendChild(bombImage);
+  bombImage.classList.add("invisible");
+
+  if (bombDiv) {
+    bombDiv.appendChild(bombImage);
+  } else {
+    console.error(`Element with class .grid-square.${bombXY} not found.`);
+  }
+
   if (callback) {
     callback(bombXY);
   }
 };
 
+// Win and lose conditions
 const gameWinPage = () => {
-  gameContainer.innerHTML = "<img class='game-image' src='https://media1.giphy.com/media/t3sZxY5zS5B0z5zMIz/giphy.gif?cid=ecf05e475gutqqclngrqibz95la1wnszu4smiue2vdejvlse&ep=v1_gifs_search&rid=giphy.gif&ct=g' alt='GIF Win Image'>";
+  gameContainer.innerHTML = "<img class='game-image-win' src='https://media1.giphy.com/media/t3sZxY5zS5B0z5zMIz/giphy.gif?cid=ecf05e475gutqqclngrqibz95la1wnszu4smiue2vdejvlse&ep=v1_gifs_search&rid=giphy.gif&ct=g' alt='GIF Win Image'>";
 };
 
 const gameOverPage = () => {
-  gameContainer.innerHTML = "<img class='game-image' src='https://media0.giphy.com/media/l3q2J7KgtglQ5GQH6/giphy.gif?cid=ecf05e47ulj9q0b2f9nfa1meuhiq0tq0v2algnrkcdjjfe6c&ep=v1_gifs_search&rid=giphy.gif&ct=g' alt='GIF Lose Image'>";
+  gameContainer.innerHTML = "<img class='game-image-lose' src='https://media0.giphy.com/media/l3q2J7KgtglQ5GQH6/giphy.gif?cid=ecf05e47ulj9q0b2f9nfa1meuhiq0tq0v2algnrkcdjjfe6c&ep=v1_gifs_search&rid=giphy.gif&ct=g' alt='GIF Lose Image'>";
 };
 
 const checkGameOver = () => {
@@ -225,7 +175,7 @@ const checkGameOver = () => {
 };
 
 const checkGameWin = () => {
-  if (moveCount === 15) {
+  if (moveCount >= 15) {
     alert("Congrats, you WIN!!");
     gameWinPage();
   }
@@ -237,5 +187,30 @@ const instructionsRemover = () => {
     paragraphs.forEach((para) => {
       para.textContent = "";
     });
+  }
+};
+
+const markVisitedSquare = (row, col) => {
+  if (rowLabels.includes(row) && colLabels.includes(col)) {
+    const visitedSquare = document.querySelector(`.grid-square.${row}${col}`);
+
+    if (visitedSquare) {
+      visitedSquare.classList.add("visited");
+    } else {
+      console.error(`Element with class .grid-square.${row}${col} not found.`);
+    }
+  }
+};
+
+const hasVisited = (xy) => {
+  const visitedSquare = document.querySelector(`.grid-square.${xy}`);
+  return visitedSquare && visitedSquare.classList.contains("visited");
+};
+
+const checkCollisionWithBomb = () => {
+  let bombSquare = document.querySelector(`.grid-square.${bombXY}`);
+  if (bombSquare && !bombSquare.querySelector(".invisible")) {
+    alert("Game Over!");
+    gameOverPage();
   }
 };
