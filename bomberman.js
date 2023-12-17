@@ -17,6 +17,7 @@ let playerXY = `${playerRow}${playerCol}`;
 let bombRow = rowLabels[Math.floor(Math.random() * rowLabels.length)];
 let bombCol = colLabels[Math.floor(Math.random() * colLabels.length)];
 let bombXY = `${bombRow}${bombCol}`;
+let moveCount = 0;
 
 function createGameBoard() {
   for (let row = 0; row < 7; row++) {
@@ -47,14 +48,14 @@ const moveLeft = () => {
   document.addEventListener("keydown", (event) => {
     if (event.key === "ArrowLeft") {
       console.log("ArrowLeft key pressed!");
-
       // Check if moving left is within the game board boundaries
       if (playerCol > 1) {
         let playerDiv = document.querySelector(`.grid-square.${playerXY}`);
         playerDiv.innerHTML = "";
 
         playerCol--; // Update the player's column position
-
+        moveCount++;
+        let moveCounter = (document.querySelector("h2").textContent = ` Counter: ${moveCount} moves`);
         let leftXY = `${playerRow}${playerCol}`;
         let leftDiv = document.querySelector(`.grid-square.${leftXY}`);
 
@@ -86,7 +87,8 @@ const moveRight = () => {
         playerDiv.innerHTML = "";
 
         playerCol++;
-
+        moveCount++;
+        let moveCounter = (document.querySelector("h2").textContent = ` Counter: ${moveCount} moves`);
         let RightXY = `${playerRow}${playerCol}`;
         let RightDiv = document.querySelector(`.grid-square.${RightXY}`);
 
@@ -121,6 +123,8 @@ const moveUp = () => {
         playerRow = rowLabels[newRowIndex];
         let UpXY = `${playerRow}${playerCol}`;
         let UpDiv = document.querySelector(`.grid-square.${UpXY}`);
+        moveCount++;
+        let moveCounter = (document.querySelector("h2").textContent = ` Counter: ${moveCount} moves`);
 
         if (UpDiv) {
           const playerImage = document.createElement("img");
@@ -153,6 +157,8 @@ const moveDown = () => {
         playerRow = rowLabels[newRowIndex];
         let DownXY = `${playerRow}${playerCol}`;
         let DownDiv = document.querySelector(`.grid-square.${DownXY}`);
+        moveCount++;
+        let moveCounter = (document.querySelector("h2").textContent = ` Counter: ${moveCount} moves`);
 
         if (DownDiv) {
           const playerImage = document.createElement("img");
