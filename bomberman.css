@@ -93,7 +93,7 @@ p.instructions-para {
   transition: all 3s;
 }
 
-.visited {
+.game-container div.visited {
   background-color: #838383;
   pointer-events: none;
 }
