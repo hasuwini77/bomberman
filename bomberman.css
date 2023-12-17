@@ -6,7 +6,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #f0f0f0;
+  background-color: #202124;
 }
 
 .game-container {
@@ -57,4 +57,33 @@ img.game-image {
 
 h2 {
   font-size: 2rem;
+  font-family: "Press Start 2P";
+  text-align: center;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 4px; /* Add some letter spacing for a more spread-out look */
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+p {
+  font-family: "Press Start 2P";
+  font-size: 0.7rem;
+  text-align: center;
+  color: #ffffff;
+  margin: 8px 5px;
+  padding: 4px;
+  animation: blink 2.7s infinite;
+  transition: all 3s;
 }

@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function DaGame() {
   createGameBoard();
   generatePlayer1();
-  generateBomb(checkGameOver);
+  generateBomb(checkGameOver, checkGameWin);
   moveLeft();
   moveRight();
   moveUp();
@@ -66,6 +66,8 @@ const moveLeft = () => {
           leftDiv.appendChild(playerImage);
           playerXY = leftXY;
           checkGameOver();
+          checkGameWin();
+          instructionsRemover();
         } else {
           console.log("We cannot move there");
         }
@@ -99,6 +101,8 @@ const moveRight = () => {
           RightDiv.appendChild(playerImage);
           playerXY = RightXY;
           checkGameOver();
+          checkGameWin();
+          instructionsRemover();
         } else {
           console.log("We cannot move there");
         }
@@ -133,6 +137,8 @@ const moveUp = () => {
           UpDiv.appendChild(playerImage);
           playerXY = UpXY;
           checkGameOver();
+          checkGameWin();
+          instructionsRemover();
         } else {
           console.log("We cannot move there");
         }
@@ -167,6 +173,8 @@ const moveDown = () => {
           DownDiv.appendChild(playerImage);
           playerXY = DownXY;
           checkGameOver();
+          checkGameWin();
+          instructionsRemover();
         } else {
           console.log("We cannot move there");
         }
@@ -213,5 +221,21 @@ const checkGameOver = () => {
   if (playerXY === bombXY) {
     alert("Game Over!");
     gameOverPage();
+  }
+};
+
+const checkGameWin = () => {
+  if (moveCount === 15) {
+    alert("Congrats, you WIN!!");
+    gameWinPage();
+  }
+};
+
+const instructionsRemover = () => {
+  if (moveCount > 0) {
+    let paragraphs = document.querySelectorAll("p");
+    paragraphs.forEach((para) => {
+      para.textContent = "";
+    });
   }
 };
