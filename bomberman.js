@@ -233,7 +233,7 @@ const checkGameWin = () => {
 
 const instructionsRemover = () => {
   if (moveCount > 0) {
-    let paragraphs = document.querySelectorAll("p");
+    let paragraphs = document.querySelectorAll(".instructions-para");
     paragraphs.forEach((para) => {
       para.textContent = "";
     });
