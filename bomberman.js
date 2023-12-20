@@ -182,8 +182,13 @@ const checkGameOver = () => {
 
 const checkGameWin = () => {
   if (moveCount >= 15) {
-    alert("Congrats, you WIN!!");
-    gameWinPage();
+    let newWinnerImage = document.querySelector(".player-image");
+    newWinnerImage.classList.add("blinking");
+    // Same delay here
+    setTimeout(() => {
+      alert("Congrats, you WIN!!");
+      gameWinPage();
+    }, 300);
   }
 };
 
