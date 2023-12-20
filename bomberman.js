@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function DaGame() {
   moveRight();
   moveUp();
   moveDown();
+  musicPlay();
 });
 
 const gameContainer = document.querySelector(".game-container");
@@ -176,7 +177,7 @@ const checkGameOver = () => {
     setTimeout(() => {
       alert("Game Over!");
       gameOverPage();
-    }, 300);
+    }, 80);
   }
 };
 
@@ -188,7 +189,7 @@ const checkGameWin = () => {
     setTimeout(() => {
       alert("Congrats, you WIN!!");
       gameWinPage();
-    }, 300);
+    }, 80);
   }
 };
 
@@ -218,10 +219,26 @@ const hasVisited = (xy) => {
   return visitedSquare && visitedSquare.classList.contains("visited");
 };
 
-const checkCollisionWithBomb = () => {
+/* EVENTUALLY USEFUL:
+
+ const checkCollisionWithBomb = () => {
   let bombSquare = document.querySelector(`.grid-square.${bombXY}`);
   if (bombSquare && !bombSquare.querySelector(".invisible")) {
     alert("Game Over!");
     gameOverPage();
   }
+};  */
+
+const toggleMusic = () => {
+  let audio = document.getElementById("backgroundMusic");
+  if (audio.paused) {
+    audio.play();
+  } else {
+    audio.pause();
+  }
+};
+
+const musicPlay = () => {
+  let myMusic = document.querySelector(".toggle-music");
+  myMusic.addEventListener("click", toggleMusic);
 };
