@@ -239,6 +239,9 @@ const toggleMusic = () => {
 };
 
 const musicPlay = () => {
+  let audio = document.getElementById("backgroundMusic");
+  audio.loop = true;
+
   let myMusic = document.querySelector(".toggle-music");
   myMusic.addEventListener("click", toggleMusic);
 };
