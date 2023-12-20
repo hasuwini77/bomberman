@@ -44,7 +44,8 @@ const generatePlayer1 = () => {
   }
 };
 
-// Movement functions
+// M O V E M E N T
+// F U N C T I O N S
 
 const moveLeft = () => {
   document.addEventListener("keydown", (event) => {
@@ -130,7 +131,11 @@ const handleMove = (newXY) => {
 };
 // BOMB GENERATION
 const generateBomb = (callback) => {
-  let bombDiv = document.querySelector(`.grid-square.${bombXY}`);
+  // Generate the bomb image
+  const bombImage = document.createElement("img");
+  bombImage.src = "./images/bomb.png";
+  bombImage.classList.add("bomb-image");
+  bombImage.classList.add("invisible");
 
   // Check if bomb is in the same position as the player
   while (bombXY === playerXY) {
@@ -140,12 +145,8 @@ const generateBomb = (callback) => {
     bombXY = `${bombRow}${bombCol}`;
     bombDiv = document.querySelector(`.grid-square.${bombXY}`);
   }
-
-  // Generate the bomb image
-  const bombImage = document.createElement("img");
-  bombImage.src = "./images/bomb.png";
-  bombImage.classList.add("bomb-image");
-  bombImage.classList.add("invisible");
+  // select the bomb square
+  let bombDiv = document.querySelector(`.grid-square.${bombXY}`);
 
   if (bombDiv) {
     bombDiv.appendChild(bombImage);
@@ -169,8 +170,13 @@ const gameOverPage = () => {
 
 const checkGameOver = () => {
   if (playerXY === bombXY) {
-    alert("Game Over!");
-    gameOverPage();
+    let daBomb = document.querySelector(".bomb-image");
+    daBomb.classList.add("blinking");
+    // Introduce a delay before displaying the Game Over Alert
+    setTimeout(() => {
+      alert("Game Over!");
+      gameOverPage();
+    }, 300);
   }
 };
 
