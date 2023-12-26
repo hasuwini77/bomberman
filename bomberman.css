@@ -122,6 +122,55 @@ p.instructions-para {
   pointer-events: none;
 }
 
+.mobile-movevement {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mobile-movevement button {
+  font-family: "Press Start 2P", cursive;
+  font-size: 16px;
+  padding: 10px;
+  margin: 5px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  outline: none;
+  transition: background-color 0.3s;
+  display: flex;
+}
+
+.mobile-movevement button::before {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.mobile-movevement #upButton::before {
+  content: "↑";
+}
+
+.mobile-movevement #downButton::before {
+  content: "↓";
+}
+
+.mobile-movevement #leftButton::before {
+  content: "←";
+}
+
+.mobile-movevement #rightButton::before {
+  content: "→";
+}
+
+.counter-move h2 {
+  font-family: "Press Start 2P", cursive;
+  color: #3498db;
+  text-align: center;
+}
+
 footer {
   padding: 10px;
 }

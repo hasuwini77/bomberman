@@ -2,11 +2,8 @@ document.addEventListener("DOMContentLoaded", function DaGame() {
   createGameBoard();
   generatePlayer1();
   generateBomb(checkGameOver, checkGameWin);
-  moveLeft();
-  moveRight();
-  moveUp();
-  moveDown();
   musicPlay();
+  setupMovementListeners();
 });
 
 const gameContainer = document.querySelector(".game-container");
@@ -48,58 +45,71 @@ const generatePlayer1 = () => {
 // M O V E M E N T
 // F U N C T I O N S
 
-const moveLeft = () => {
+const setupMovementListeners = () => {
   document.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowLeft") {
-      if (playerCol > 1) {
-        let leftXY = `${playerRow}${playerCol - 1}`;
-        handleMove(leftXY);
-      } else {
-        alert("Cannot move left, at the edge of the board.");
-      }
+    switch (event.key) {
+      case "ArrowLeft":
+        moveLeft();
+        break;
+      case "ArrowRight":
+        moveRight();
+        break;
+      case "ArrowUp":
+        moveUp();
+        break;
+      case "ArrowDown":
+        moveDown();
+        break;
     }
   });
+
+  const upButton = document.querySelector("#upButton");
+  const downButton = document.querySelector("#downButton");
+  const leftButton = document.querySelector("#leftButton");
+  const rightButton = document.querySelector("#rightButton");
+
+  upButton.addEventListener("click", moveUp);
+  downButton.addEventListener("click", moveDown);
+  leftButton.addEventListener("click", moveLeft);
+  rightButton.addEventListener("click", moveRight);
+};
+
+const moveLeft = () => {
+  if (playerCol > 1) {
+    let leftXY = `${playerRow}${playerCol - 1}`;
+    handleMove(leftXY);
+  } else {
+    alert("Cannot move left, at the edge of the board.");
+  }
 };
 
 const moveRight = () => {
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowRight") {
-      if (playerCol < 7) {
-        let rightXY = `${playerRow}${parseInt(playerCol) + 1}`;
-        handleMove(rightXY);
-      } else {
-        alert("Cannot move right, at the edge of the board.");
-      }
-    }
-  });
+  if (playerCol < 7) {
+    let rightXY = `${playerRow}${parseInt(playerCol) + 1}`;
+    handleMove(rightXY);
+  } else {
+    alert("Cannot move right, at the edge of the board.");
+  }
 };
 
 const moveUp = () => {
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowUp") {
-      if (rowLabels.indexOf(playerRow) !== 0) {
-        let upRow = rowLabels[rowLabels.indexOf(playerRow) - 1];
-        let upXY = `${upRow}${playerCol}`;
-        handleMove(upXY);
-      } else {
-        alert("Cannot move UP, at the edge of the board.");
-      }
-    }
-  });
+  if (rowLabels.indexOf(playerRow) !== 0) {
+    let upRow = rowLabels[rowLabels.indexOf(playerRow) - 1];
+    let upXY = `${upRow}${playerCol}`;
+    handleMove(upXY);
+  } else {
+    alert("Cannot move UP, at the edge of the board.");
+  }
 };
 
 const moveDown = () => {
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowDown") {
-      if (rowLabels.indexOf(playerRow) !== 6) {
-        let downRow = rowLabels[rowLabels.indexOf(playerRow) + 1];
-        let downXY = `${downRow}${playerCol}`;
-        handleMove(downXY);
-      } else {
-        alert("Cannot move DOWN, at the edge of the board.");
-      }
-    }
-  });
+  if (rowLabels.indexOf(playerRow) !== 6) {
+    let downRow = rowLabels[rowLabels.indexOf(playerRow) + 1];
+    let downXY = `${downRow}${playerCol}`;
+    handleMove(downXY);
+  } else {
+    alert("Cannot move DOWN, at the edge of the board.");
+  }
 };
 
 const handleMove = (newXY) => {
@@ -130,6 +140,21 @@ const handleMove = (newXY) => {
     alert("Already visited this square");
   }
 };
+
+// MOBILE MOVEMENT
+
+const mobileMovement = () => {
+  const upButton = document.querySelector("#upButton");
+  const downButton = document.querySelector("#downButton");
+  const leftButton = document.querySelector("#leftButton");
+  const rightButton = document.querySelector("#rightButton");
+
+  upButton.addEventListener("click", moveUp);
+  downButton.addEventListener("click", moveDown);
+  leftButton.addEventListener("click", moveLeft);
+  rightButton.addEventListener("click", moveRight);
+};
+
 // BOMB GENERATION
 const generateBomb = (callback) => {
   // Generate the bomb image
