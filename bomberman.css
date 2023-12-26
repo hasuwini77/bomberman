@@ -125,6 +125,9 @@ p.instructions-para {
 .mobile-movevement {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .mobile-movevement button {
@@ -140,6 +143,9 @@ p.instructions-para {
   outline: none;
   transition: background-color 0.3s;
   display: flex;
+  max-width: 130px;
+  align-items: center;
+  justify-content: center;
 }
 
 .mobile-movevement button::before {
@@ -171,6 +177,9 @@ p.instructions-para {
   text-align: center;
 }
 
+.left-right {
+  display: flex;
+}
 footer {
   padding: 10px;
 }

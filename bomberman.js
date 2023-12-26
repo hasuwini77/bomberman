@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function DaGame() {
   createGameBoard();
   generatePlayer1();
   generateBomb(checkGameOver, checkGameWin);
-  musicPlay();
+  // musicPlay();
   setupMovementListeners();
 });
 
@@ -252,8 +252,9 @@ const hasVisited = (xy) => {
     alert("Game Over!");
     gameOverPage();
   }
-};  */
+};  
 
+ 
 const toggleMusic = () => {
   let audio = document.getElementById("backgroundMusic");
   if (audio.paused) {
@@ -270,3 +271,5 @@ const musicPlay = () => {
   let myMusic = document.querySelector(".toggle-music");
   myMusic.addEventListener("click", toggleMusic);
 };
+
+*/
