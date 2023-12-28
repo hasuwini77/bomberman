@@ -244,6 +244,20 @@ const hasVisited = (xy) => {
   return visitedSquare && visitedSquare.classList.contains("visited");
 };
 
+const showHelpBubble = () => {
+  let bubbleHelp = document.getElementById("helpBubble");
+  if (bubbleHelp) {
+    bubbleHelp.style.display = "block";
+  }
+};
+
+const hideHelpBubble = () => {
+  let bubbleHelp = document.getElementById("helpBubble");
+  if (bubbleHelp) {
+    bubbleHelp.style.display = "none";
+  }
+};
+
 /* EVENTUALLY USEFUL:
 
  const checkCollisionWithBomb = () => {

@@ -125,16 +125,22 @@ h2 {
 
 p {
   font-family: "Press Start 2P";
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   text-align: center;
   color: #ffffff;
   margin: 8px 5px;
   padding: 4px;
 }
 
-p.instructions-para {
-  animation: blink 2.7s infinite;
-  transition: all 3s;
+.help-bubble {
+  display: none;
+}
+
+.help-button {
+  text-align: center;
+  margin: 0;
+  padding: 3px;
+  margin-bottom: 3px;
 }
 
 .game-container div.visited {

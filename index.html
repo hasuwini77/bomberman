@@ -14,10 +14,14 @@
     <div class="main-content">
       <div class="counter-move">
         <h2>BomberDude</h2>
-        <p class="instructions-para"><strong>Instructions: </strong></p>
-        <p class="instructions-para">Use arrows to move around</p>
-        <p class="instructions-para">Make 15 moves to WIN</p>
-        <p class="instructions-para">and avoid the BOMB</p>
+        <div class="help-button">
+          <button id="instructionsButton" onmouseover="showHelpBubble()" onmouseout="hideHelpBubble()">Show Instructions</button>
+        </div>
+        <div class="help-bubble" id="helpBubble">
+          <p class="instructions-para">Use arrows to move around</p>
+          <p class="instructions-para">Make 15 moves to WIN</p>
+          <p class="instructions-para">and avoid the BOMB</p>
+        </div>
       </div>
 
       <div class="game-container"></div>
