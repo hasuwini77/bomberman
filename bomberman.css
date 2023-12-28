@@ -183,3 +183,13 @@ p.instructions-para {
 footer {
   padding: 10px;
 }
+
+@media only screen and (max-width: 600px) {
+  body {
+    font-size: 14px;
+  }
+
+  .game-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
