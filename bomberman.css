@@ -133,18 +133,19 @@ p.instructions-para {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 10px;
 }
 
 .mobile-movevement button {
   font-family: "Press Start 2P", cursive;
-  font-size: 16px;
-  padding: 10px;
-  margin: 5px;
+  font-size: 14px;
+  padding: 8px;
   background-color: #3498db;
   color: #fff;
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  margin: 4px;
   outline: none;
   transition: background-color 0.3s;
   display: flex;
@@ -155,8 +156,9 @@ p.instructions-para {
 
 .mobile-movevement button::before {
   content: "";
-  display: inline-block;
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-right: 5px;
 }
 
@@ -170,10 +172,12 @@ p.instructions-para {
 
 .mobile-movevement #leftButton::before {
   content: "←";
+  font-size: 25px;
 }
 
 .mobile-movevement #rightButton::before {
   content: "→";
+  font-size: 25px;
 }
 
 .counter-move h2 {
@@ -182,9 +186,13 @@ p.instructions-para {
   text-align: center;
 }
 
-.left-right {
+.left-right,
+.upper-button,
+.down-button {
   display: flex;
+  height: 40px;
 }
+
 footer {
   display: flex;
   justify-content: center;
