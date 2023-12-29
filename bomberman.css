@@ -144,7 +144,7 @@ p {
   border-radius: 10px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  transition: opacity 0.5s ease-in-out, visibility 0s linear 0.5s;
+  transition: opacity 0.8s ease-in-out, visibility 0s linear 0.5s;
 }
 
 .help-bubble::before {
@@ -308,6 +308,10 @@ footer {
     min-height: 70%;
   }
 
+  h2 {
+    font-size: 1.5rem;
+  }
+
   .game-container {
     display: grid;
     grid-template-columns: repeat(7, 40px);
@@ -353,5 +357,17 @@ footer {
   img.game-image-win {
     min-width: 300px;
     height: auto;
+  }
+
+  .help-bubble {
+    bottom: 550px;
+  }
+  .instructions-para {
+    font-size: 0.4rem;
+  }
+  Button#instructionsButton {
+    font-size: 0.5rem;
+    padding: 10px;
+    margin-bottom: 10px;
   }
 }

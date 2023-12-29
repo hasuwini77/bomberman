@@ -133,6 +133,7 @@ const handleMove = (newXY) => {
       checkGameOver();
       checkGameWin();
       instructionsRemover();
+      instructionsButtonRemover();
     } else {
       console.log("We cannot move there");
     }
@@ -220,10 +221,24 @@ const checkGameWin = () => {
 
 const instructionsRemover = () => {
   if (moveCount > 0) {
-    let paragraphs = document.querySelectorAll(".instructions-para");
-    paragraphs.forEach((para) => {
-      para.textContent = "";
-    });
+    let bubble = document.querySelector("div.help-bubble");
+    if (bubble) {
+      bubble.style.opacity = 0;
+      bubble.addEventListener(
+        "transitionend",
+        () => {
+          bubble.remove();
+        },
+        { once: true }
+      );
+    }
+  }
+};
+
+const instructionsButtonRemover = () => {
+  if (moveCount > 0) {
+    let instruButton = document.querySelector("div.help-button");
+    instruButton.textContent = "";
   }
 };
 
