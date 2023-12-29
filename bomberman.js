@@ -1,3 +1,6 @@
+let winCount = 0;
+let lossCount = 0;
+
 document.addEventListener("DOMContentLoaded", function DaGame() {
   createGameBoard();
   generatePlayer1();
@@ -132,6 +135,7 @@ const handleMove = (newXY) => {
       checkGameWin();
       instructionsRemover();
       instructionsButtonRemover();
+      displayWinLossCount();
     } else {
       console.log("We cannot move there");
     }
@@ -191,13 +195,11 @@ const initGame = () => {
   generatePlayer1();
   generateBomb(checkGameOver, checkGameWin);
   setupMovementListeners();
-
   document.querySelector("h2").textContent = ` Counter: ${moveCount} moves`;
-
   hideHelpBubble();
-
-  // Move the event listener setup for the restart button here
-  document.getElementById("restartButton").addEventListener("click", initGame);
+  if (winCount > 0 || lossCount > 0) {
+    displayWinLossCount();
+  }
 };
 
 document.addEventListener("click", function (event) {
@@ -205,16 +207,23 @@ document.addEventListener("click", function (event) {
     initGame();
   }
 });
+
 const gameWinPage = () => {
-  gameContainer.innerHTML = "<img class='game-image-win' src='https://media1.giphy.com/media/t3sZxY5zS5B0z5zMIz/giphy.gif?cid=ecf05e475gutqqclngrqibz95la1wnszu4smiue2vdejvlse&ep=v1_gifs_search&rid=giphy.gif&ct=g' alt='GIF Win Image'>";
+  winCount++;
+  displayWinLossCount();
+  gameContainer.innerHTML = `<p class="winCount">Wins: ${winCount}</p><img class='game-image-win' src='https://media1.giphy.com/media/t3sZxY5zS5B0z5zMIz/giphy.gif?cid=ecf05e475gutqqclngrqibz95la1wnszu4smiue2vdejvlse&ep=v1_gifs_search&rid=giphy.gif&ct=g' alt='GIF Win Image'>`;
   gameContainer.innerHTML += "<button id='restartButton'>Restart Game</button>";
   document.getElementById("restartButton").addEventListener("click", initGame);
+  displayWinLossCount();
 };
 
 const gameOverPage = () => {
-  gameContainer.innerHTML = "<img class='game-image-lose' src='https://media0.giphy.com/media/l3q2J7KgtglQ5GQH6/giphy.gif?cid=ecf05e47ulj9q0b2f9nfa1meuhiq0tq0v2algnrkcdjjfe6c&ep=v1_gifs_search&rid=giphy.gif&ct=g' alt='GIF Lose Image'>";
+  lossCount++;
+  displayWinLossCount();
+  gameContainer.innerHTML = `<p class="lossCount">Losses: ${lossCount}</p><img class='game-image-lose' src='https://media0.giphy.com/media/l3q2J7KgtglQ5GQH6/giphy.gif?cid=ecf05e47ulj9q0b2f9nfa1meuhiq0tq0v2algnrkcdjjfe6c&ep=v1_gifs_search&rid=giphy.gif&ct=g' alt='GIF Lose Image'>`;
   gameContainer.innerHTML += "<button id='restartButton'>Restart Game</button>";
   document.getElementById("restartButton").addEventListener("click", initGame);
+  displayWinLossCount();
 };
 
 const checkGameOver = () => {
@@ -236,6 +245,18 @@ const checkGameWin = () => {
       alert("Congrats, you WIN!!");
       gameWinPage();
     }, 80);
+  }
+};
+
+// COUNTERS
+
+const displayWinLossCount = () => {
+  let winCounter = document.getElementById("winCount");
+  let lossCounter = document.getElementById("lossCount");
+
+  if (winCounter !== null && lossCounter !== null) {
+    winCounter.textContent = `Wins: ${winCount}`;
+    lossCounter.textContent = `Losses: ${lossCount}`;
   }
 };
 

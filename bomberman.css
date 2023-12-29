@@ -299,6 +299,12 @@ footer {
   width: 100%;
 }
 
+.winCount,
+.lossCount {
+  font-size: 0.8rem;
+  font-family: "Press Start 2P";
+  color: #3498db;
+}
 @media only screen and (max-width: 600px) {
   body {
     margin: 0;
