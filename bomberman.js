@@ -247,14 +247,14 @@ const hasVisited = (xy) => {
 const showHelpBubble = () => {
   let bubbleHelp = document.getElementById("helpBubble");
   if (bubbleHelp) {
-    bubbleHelp.style.display = "block";
+    bubbleHelp.classList.add("show");
   }
 };
 
 const hideHelpBubble = () => {
   let bubbleHelp = document.getElementById("helpBubble");
   if (bubbleHelp) {
-    bubbleHelp.style.display = "none";
+    bubbleHelp.classList.remove("show");
   }
 };
 

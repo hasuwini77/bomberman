@@ -133,7 +133,34 @@ p {
 }
 
 .help-bubble {
-  display: none;
+  position: absolute;
+  bottom: 520px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  visibility: hidden;
+  max-width: 300px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.5s ease-in-out, visibility 0s linear 0.5s;
+}
+
+.help-bubble::before {
+  content: "";
+  position: absolute;
+  bottom: -10px; /* Adjust this value to bring the triangle into view */
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent #fff transparent;
+}
+.help-bubble.show {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease-in-out, visibility 0s linear;
 }
 
 .help-button {
@@ -143,9 +170,56 @@ p {
   margin-bottom: 3px;
 }
 
+button#instructionsButton {
+  align-items: center;
+  appearance: none;
+  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+  border: 0;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "Press Start 2P", cursive;
+  height: 32px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow 0.15s, transform 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow, transform;
+  font-size: 0.7rem;
+}
+
+button#instructionsButton:focus {
+  box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+}
+
+button#instructionsButton:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+button#instructionsButton:active {
+  box-shadow: #3c4fe0 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
 .game-container div.visited {
   background-color: #838383;
   pointer-events: none;
+}
+
+.instructions-para {
+  color: #202124;
 }
 
 .mobile-movevement {
@@ -277,7 +351,7 @@ footer {
 
   img.game-image-lose,
   img.game-image-win {
-    min-width: 300px; /* Ensure the image doesn't exceed its container width */
-    height: auto; /* Maintain the aspect ratio */
+    min-width: 300px;
+    height: auto;
   }
 }
