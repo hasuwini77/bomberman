@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function DaGame() {
   createGameBoard();
   generatePlayer1();
   generateBomb(checkGameOver, checkGameWin);
-  // musicPlay();
   setupMovementListeners();
 });
 
@@ -42,26 +41,8 @@ const generatePlayer1 = () => {
   }
 };
 
-// M O V E M E N T
-// F U N C T I O N S
-
 const setupMovementListeners = () => {
-  document.addEventListener("keydown", (event) => {
-    switch (event.key) {
-      case "ArrowLeft":
-        moveLeft();
-        break;
-      case "ArrowRight":
-        moveRight();
-        break;
-      case "ArrowUp":
-        moveUp();
-        break;
-      case "ArrowDown":
-        moveDown();
-        break;
-    }
-  });
+  document.addEventListener("keydown", handleKeyDown);
 
   const upButton = document.querySelector("#upButton");
   const downButton = document.querySelector("#downButton");
@@ -74,9 +55,26 @@ const setupMovementListeners = () => {
   rightButton.addEventListener("click", moveRight);
 };
 
+const handleKeyDown = (event) => {
+  switch (event.key) {
+    case "ArrowLeft":
+      moveLeft();
+      break;
+    case "ArrowRight":
+      moveRight();
+      break;
+    case "ArrowUp":
+      moveUp();
+      break;
+    case "ArrowDown":
+      moveDown();
+      break;
+  }
+};
+
 const moveLeft = () => {
   if (playerCol > 1) {
-    let leftXY = `${playerRow}${playerCol - 1}`;
+    let leftXY = `${playerRow}${parseInt(playerCol) - 1}`;
     handleMove(leftXY);
   } else {
     alert("Cannot move left, at the edge of the board.");
@@ -119,7 +117,7 @@ const handleMove = (newXY) => {
 
     let newDiv = document.querySelector(`.grid-square.${newXY}`);
     moveCount++;
-    let moveCounter = (document.querySelector("h2").textContent = ` Counter: ${moveCount} moves`);
+    document.querySelector("h2").textContent = ` Counter: ${moveCount} moves`;
 
     if (newDiv) {
       const playerImage = document.createElement("img");
@@ -141,9 +139,6 @@ const handleMove = (newXY) => {
     alert("Already visited this square");
   }
 };
-
-// MOBILE MOVEMENT
-
 const mobileMovement = () => {
   const upButton = document.querySelector("#upButton");
   const downButton = document.querySelector("#downButton");
@@ -156,23 +151,19 @@ const mobileMovement = () => {
   rightButton.addEventListener("click", moveRight);
 };
 
-// BOMB GENERATION
 const generateBomb = (callback) => {
-  // Generate the bomb image
   const bombImage = document.createElement("img");
   bombImage.src = "./images/bomb.png";
   bombImage.classList.add("bomb-image");
   bombImage.classList.add("invisible");
 
-  // Check if bomb is in the same position as the player
   while (bombXY === playerXY) {
-    // Regenerate bomb coordinates
     bombRow = rowLabels[Math.floor(Math.random() * rowLabels.length)];
     bombCol = colLabels[Math.floor(Math.random() * colLabels.length)];
     bombXY = `${bombRow}${bombCol}`;
     bombDiv = document.querySelector(`.grid-square.${bombXY}`);
   }
-  // select the bomb square
+
   let bombDiv = document.querySelector(`.grid-square.${bombXY}`);
 
   if (bombDiv) {
@@ -186,20 +177,50 @@ const generateBomb = (callback) => {
   }
 };
 
-// Win and lose conditions
+const initGame = () => {
+  moveCount = 0;
+  playerRow = rowLabels[Math.floor(Math.random() * rowLabels.length)];
+  playerCol = colLabels[Math.floor(Math.random() * colLabels.length)];
+  playerXY = `${playerRow}${playerCol}`;
+  bombRow = rowLabels[Math.floor(Math.random() * rowLabels.length)];
+  bombCol = colLabels[Math.floor(Math.random() * colLabels.length)];
+  bombXY = `${bombRow}${bombCol}`;
+
+  gameContainer.innerHTML = "";
+  createGameBoard();
+  generatePlayer1();
+  generateBomb(checkGameOver, checkGameWin);
+  setupMovementListeners();
+
+  document.querySelector("h2").textContent = ` Counter: ${moveCount} moves`;
+
+  hideHelpBubble();
+
+  // Move the event listener setup for the restart button here
+  document.getElementById("restartButton").addEventListener("click", initGame);
+};
+
+document.addEventListener("click", function (event) {
+  if (event.target.id === "restartButton") {
+    initGame();
+  }
+});
 const gameWinPage = () => {
   gameContainer.innerHTML = "<img class='game-image-win' src='https://media1.giphy.com/media/t3sZxY5zS5B0z5zMIz/giphy.gif?cid=ecf05e475gutqqclngrqibz95la1wnszu4smiue2vdejvlse&ep=v1_gifs_search&rid=giphy.gif&ct=g' alt='GIF Win Image'>";
+  gameContainer.innerHTML += "<button id='restartButton'>Restart Game</button>";
+  document.getElementById("restartButton").addEventListener("click", initGame);
 };
 
 const gameOverPage = () => {
   gameContainer.innerHTML = "<img class='game-image-lose' src='https://media0.giphy.com/media/l3q2J7KgtglQ5GQH6/giphy.gif?cid=ecf05e47ulj9q0b2f9nfa1meuhiq0tq0v2algnrkcdjjfe6c&ep=v1_gifs_search&rid=giphy.gif&ct=g' alt='GIF Lose Image'>";
+  gameContainer.innerHTML += "<button id='restartButton'>Restart Game</button>";
+  document.getElementById("restartButton").addEventListener("click", initGame);
 };
 
 const checkGameOver = () => {
   if (playerXY === bombXY) {
     let daBomb = document.querySelector(".bomb-image");
     daBomb.classList.add("blinking");
-    // Introduce a delay before displaying the Game Over Alert
     setTimeout(() => {
       alert("Game Over!");
       gameOverPage();
@@ -211,7 +232,6 @@ const checkGameWin = () => {
   if (moveCount >= 15) {
     let newWinnerImage = document.querySelector(".player-image");
     newWinnerImage.classList.add("blinking");
-    // Same delay here
     setTimeout(() => {
       alert("Congrats, you WIN!!");
       gameWinPage();
@@ -272,33 +292,3 @@ const hideHelpBubble = () => {
     bubbleHelp.classList.remove("show");
   }
 };
-
-/* EVENTUALLY USEFUL:
-
- const checkCollisionWithBomb = () => {
-  let bombSquare = document.querySelector(`.grid-square.${bombXY}`);
-  if (bombSquare && !bombSquare.querySelector(".invisible")) {
-    alert("Game Over!");
-    gameOverPage();
-  }
-};  
-
- 
-const toggleMusic = () => {
-  let audio = document.getElementById("backgroundMusic");
-  if (audio.paused) {
-    audio.play();
-  } else {
-    audio.pause();
-  }
-};
-
-const musicPlay = () => {
-  let audio = document.getElementById("backgroundMusic");
-  audio.loop = true;
-
-  let myMusic = document.querySelector(".toggle-music");
-  myMusic.addEventListener("click", toggleMusic);
-};
-
-*/
