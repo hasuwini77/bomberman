@@ -8,7 +8,10 @@ document.addEventListener("DOMContentLoaded", function DaGame() {
   setupMovementListeners();
 });
 
-const gameContainer = document.querySelector(".game-container");
+const gameMainContent = document.querySelector(".main-content");
+const gameWrapperDiv = document.querySelector(".game-wrapper");
+let gameContainer = document.querySelector(".game-container");
+const restartButton = document.getElementById("restartButton");
 const rowLabels = ["A", "B", "C", "D", "E", "F", "G"];
 const colLabels = ["1", "2", "3", "4", "5", "6", "7"];
 let playerRow = rowLabels[Math.floor(Math.random() * rowLabels.length)];
@@ -183,6 +186,25 @@ const generateBomb = (callback) => {
 
 const initGame = () => {
   moveCount = 0;
+  winCount = 0;
+  lossCount = 0;
+
+  // Check if gameContainer exists
+  if (gameContainer) {
+    gameContainer.remove();
+  }
+
+  // Remove game images and restart button
+  document.querySelectorAll(".game-image-win, .game-image-lose, .restart-button").forEach((element) => element.remove());
+
+  // Create a new gameContainer
+  gameContainer = document.createElement("div");
+  gameContainer.classList.add("game-container");
+
+  // Append the new gameContainer to the gameWrapperDiv
+  gameWrapperDiv.appendChild(gameContainer);
+
+  // Reset player and bomb positions
   playerRow = rowLabels[Math.floor(Math.random() * rowLabels.length)];
   playerCol = colLabels[Math.floor(Math.random() * colLabels.length)];
   playerXY = `${playerRow}${playerCol}`;
@@ -190,12 +212,13 @@ const initGame = () => {
   bombCol = colLabels[Math.floor(Math.random() * colLabels.length)];
   bombXY = `${bombRow}${bombCol}`;
 
-  gameContainer.innerHTML = "";
+  // Rest of your game initialization logic
   createGameBoard();
   generatePlayer1();
   generateBomb(checkGameOver, checkGameWin);
   setupMovementListeners();
   document.querySelector("h2").textContent = ` Counter: ${moveCount} moves`;
+
   hideHelpBubble();
   if (winCount > 0 || lossCount > 0) {
     displayWinLossCount();
@@ -211,23 +234,27 @@ document.addEventListener("click", function (event) {
 const gameWinPage = () => {
   winCount++;
   displayWinLossCount();
-  gameContainer.innerHTML = `<p class="winCount">Wins: ${winCount}</p><img class='game-image-win' src='https://media1.giphy.com/media/t3sZxY5zS5B0z5zMIz/giphy.gif?cid=ecf05e475gutqqclngrqibz95la1wnszu4smiue2vdejvlse&ep=v1_gifs_search&rid=giphy.gif&ct=g' alt='GIF Win Image'>`;
-  gameContainer.innerHTML += "<button id='restartButton'>Restart Game</button>";
-  document.getElementById("restartButton").addEventListener("click", initGame);
+  gameWrapperDiv.innerHTML = `<p class="winCount">Wins: ${winCount}</p> <p class="lossCount">Losses: ${lossCount}</p><img class='game-image-win' src='https://media1.giphy.com/media/t3sZxY5zS5B0z5zMIz/giphy.gif?cid=ecf05e475gutqqclngrqibz95la1wnszu4smiue2vdejvlse&ep=v1_gifs_search&rid=giphy.gif&ct=g' alt='GIF Win Image'>
+  <button class="restart-button" id="restartButton">Restart Game</button>`;
+  if (restartButton) restartButton.addEventListener("click", initGame);
+  if (restartButton) restartButton.style.display = "block";
   displayWinLossCount();
 };
 
 const gameOverPage = () => {
   lossCount++;
   displayWinLossCount();
-  gameContainer.innerHTML = `<p class="lossCount">Losses: ${lossCount}</p><img class='game-image-lose' src='https://media0.giphy.com/media/l3q2J7KgtglQ5GQH6/giphy.gif?cid=ecf05e47ulj9q0b2f9nfa1meuhiq0tq0v2algnrkcdjjfe6c&ep=v1_gifs_search&rid=giphy.gif&ct=g' alt='GIF Lose Image'>`;
-  gameContainer.innerHTML += "<button id='restartButton'>Restart Game</button>";
-  document.getElementById("restartButton").addEventListener("click", initGame);
+  gameWrapperDiv.innerHTML = `<p class="winCount">Wins: ${winCount}</p> <p class="lossCount">Losses: ${lossCount}</p> <img class='game-image-lose' src='https://media0.giphy.com/media/l3q2J7KgtglQ5GQH6/giphy.gif?cid=ecf05e47ulj9q0b2f9nfa1meuhiq0tq0v2algnrkcdjjfe6c&ep=v1_gifs_search&rid=giphy.gif&ct=g' alt='GIF Lose Image'>
+  <button class="restart-button" id="restartButton">Restart Game</button>`;
+  if (restartButton) restartButton.addEventListener("click", initGame);
+  if (restartButton) restartButton.style.display = "block";
   displayWinLossCount();
 };
 
 const checkGameOver = () => {
-  if (playerXY === bombXY) {
+  const noMovePossible = !canMove("up") && !canMove("down") && !canMove("left") && !canMove("right");
+
+  if (playerXY === bombXY || noMovePossible) {
     let daBomb = document.querySelector(".bomb-image");
     daBomb.classList.add("blinking");
     setTimeout(() => {
@@ -235,6 +262,15 @@ const checkGameOver = () => {
       gameOverPage();
     }, 80);
   }
+};
+
+// Find out if newXY is within boundaries
+const canMove = (direction) => {
+  const newRow = rowLabels.indexOf(playerRow) + (direction === "up" ? -1 : direction === "down" ? 1 : 0);
+  const newCol = parseInt(playerCol) + (direction === "left" ? -1 : direction === "right" ? 1 : 0);
+  const newXY = `${rowLabels[newRow]}${newCol}`;
+
+  return newRow >= 0 && newRow < 7 && newCol >= 1 && newCol <= 7 && !hasVisited(newXY);
 };
 
 const checkGameWin = () => {
