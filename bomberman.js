@@ -186,22 +186,17 @@ const generateBomb = (callback) => {
 
 const initGame = () => {
   moveCount = 0;
-  winCount = 0;
-  lossCount = 0;
 
   // Check if gameContainer exists
   if (gameContainer) {
     gameContainer.remove();
   }
-
-  // Remove game images and restart button
   document.querySelectorAll(".game-image-win, .game-image-lose, .restart-button").forEach((element) => element.remove());
 
   // Create a new gameContainer
   gameContainer = document.createElement("div");
   gameContainer.classList.add("game-container");
 
-  // Append the new gameContainer to the gameWrapperDiv
   gameWrapperDiv.appendChild(gameContainer);
 
   // Reset player and bomb positions
@@ -212,7 +207,6 @@ const initGame = () => {
   bombCol = colLabels[Math.floor(Math.random() * colLabels.length)];
   bombXY = `${bombRow}${bombCol}`;
 
-  // Rest of your game initialization logic
   createGameBoard();
   generatePlayer1();
   generateBomb(checkGameOver, checkGameWin);
@@ -286,10 +280,10 @@ const checkGameWin = () => {
 
 // COUNTERS
 
-const displayWinLossCount = () => {
-  let winCounter = document.getElementById("winCount");
-  let lossCounter = document.getElementById("lossCount");
+let winCounter = document.getElementById("winCount");
+let lossCounter = document.getElementById("lossCount");
 
+const displayWinLossCount = () => {
   if (winCounter !== null && lossCounter !== null) {
     winCounter.textContent = `Wins: ${winCount}`;
     lossCounter.textContent = `Losses: ${lossCount}`;
