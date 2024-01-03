@@ -185,7 +185,6 @@ const generateBomb = (callback) => {
     bombRow = rowLabels[Math.floor(Math.random() * rowLabels.length)];
     bombCol = colLabels[Math.floor(Math.random() * colLabels.length)];
     bombXY = `${bombRow}${bombCol}`;
-    bombDiv = document.querySelector(`.grid-square.${bombXY}`);
   }
 
   let bombDiv = document.querySelector(`.grid-square.${bombXY}`);
@@ -237,7 +236,7 @@ const initGame = () => {
 };
 
 document.addEventListener("click", function (event) {
-  if (event.target.id === "restartButton" || (event.key === "Enter" && event.target.id === restartButton)) {
+  if (event.target.id === "restartButton") {
     initGame();
   }
 });
@@ -247,14 +246,19 @@ const gameWinPage = () => {
   displayWinLossCount();
   gameWrapperDiv.innerHTML = `<p class="winCount">Wins: ${winCount}</p> <p class="lossCount">Losses: ${lossCount}</p><img class='game-image-win' src='https://media1.giphy.com/media/t3sZxY5zS5B0z5zMIz/giphy.gif?cid=ecf05e475gutqqclngrqibz95la1wnszu4smiue2vdejvlse&ep=v1_gifs_search&rid=giphy.gif&ct=g' alt='GIF Win Image'>
   <button class="restart-button" id="restartButton">Restart Game</button>`;
-  if (restartButton) restartButton.addEventListener("click", initGame);
-  if (restartButton)
-    restartButton.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
+  const restartButton = document.getElementById("restartButton");
+
+  if (restartButton) {
+    restartButton.addEventListener("click", initGame);
+    restartButton.focus();
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && document.activeElement.id === "restartButton") {
         initGame();
       }
     });
-  if (restartButton) restartButton.style.display = "block";
+  }
+
   displayWinLossCount();
 };
 
@@ -263,14 +267,19 @@ const gameOverPage = () => {
   displayWinLossCount();
   gameWrapperDiv.innerHTML = `<p class="winCount">Wins: ${winCount}</p> <p class="lossCount">Losses: ${lossCount}</p> <img class='game-image-lose' src='https://media0.giphy.com/media/l3q2J7KgtglQ5GQH6/giphy.gif?cid=ecf05e47ulj9q0b2f9nfa1meuhiq0tq0v2algnrkcdjjfe6c&ep=v1_gifs_search&rid=giphy.gif&ct=g' alt='GIF Lose Image'>
   <button class="restart-button" id="restartButton">Restart Game</button>`;
-  if (restartButton) restartButton.addEventListener("click", initGame);
-  if (restartButton)
-    restartButton.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
+  const restartButton = document.getElementById("restartButton");
+
+  if (restartButton) {
+    restartButton.addEventListener("click", initGame);
+    restartButton.focus();
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && document.activeElement.id === "restartButton") {
         initGame();
       }
     });
-  if (restartButton) restartButton.style.display = "block";
+  }
+
   displayWinLossCount();
 };
 
