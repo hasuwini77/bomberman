@@ -127,14 +127,16 @@ const handleMove = (newXY) => {
   if (!hasVisited(newXY)) {
     let playerDiv = document.querySelector(`.grid-square.${playerXY}`);
     if (!playerDiv) {
-      console.log(`No need to press the arrows here ;)`);
+      console.log(`No need to press the arrows here ;) 
+      \n Press the Restart Game button instead ;)`);
       return;
     }
     playerDiv.innerHTML = "";
 
     let newDiv = document.querySelector(`.grid-square.${newXY}`);
     if (!newDiv) {
-      console.log(`No need to press the arrows here ;)`);
+      console.log(`No need to press the arrows here ;) 
+      \n Press the Restart Game button instead ;)`);
       return;
     }
     moveCount++;
@@ -263,11 +265,16 @@ const gameOverPage = () => {
 const checkGameOver = () => {
   const noMovePossible = !canMove("up") && !canMove("down") && !canMove("left") && !canMove("right");
 
-  if (playerXY === bombXY || noMovePossible) {
+  if (playerXY === bombXY) {
     let daBomb = document.querySelector(".bomb-image");
     daBomb.classList.add("blinking");
     setTimeout(() => {
       alert("Game Over!");
+      gameOverPage();
+    }, 80);
+  } else if (noMovePossible) {
+    setTimeout(() => {
+      alert("You locked yourself down bro!");
       gameOverPage();
     }, 80);
   }
@@ -275,6 +282,9 @@ const checkGameOver = () => {
 
 // Find out if newXY is within boundaries
 const canMove = (direction) => {
+  if (hasGameWon) {
+    return;
+  }
   const newRow = rowLabels.indexOf(playerRow) + (direction === "up" ? -1 : direction === "down" ? 1 : 0);
   const newCol = parseInt(playerCol) + (direction === "left" ? -1 : direction === "right" ? 1 : 0);
   const newXY = `${rowLabels[newRow]}${newCol}`;
@@ -291,7 +301,7 @@ const checkGameWin = () => {
 
     const winMessage = document.createElement("div");
     winMessage.classList.add("win-message");
-    winMessage.textContent = "Congratulations, You WIN!";
+    winMessage.textContent = "Congratulations! You WIN!";
 
     gameContainer.appendChild(winMessage);
 
@@ -299,7 +309,7 @@ const checkGameWin = () => {
       winMessage.remove();
       gameWinPage();
       hasGameWon = false;
-    }, 3000);
+    }, 5000);
   }
 };
 
