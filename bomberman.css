@@ -338,7 +338,7 @@ footer {
   transform: scale(0.75);
 }
 
-.win-message {
+div.win-message {
   position: absolute;
   text-align: center;
   font-family: "Press Start 2P";
@@ -348,20 +348,67 @@ footer {
   font-size: 2rem;
   font-weight: bold;
   color: #3498db;
-  animation: zoomIn 3s ease; /* Adjust duration and easing as needed */
+  animation: zoomIn 4s ease;
+  width: 0;
+  height: 0;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+div.win-message::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: -1;
+}
+
+div.lose-message {
+  position: absolute;
+  text-align: center;
+  font-family: "Press Start 2P";
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  font-weight: bold;
+  color: #3498db;
+  animation: zoomIn 4s ease;
+  width: 0;
+  height: 0;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+div.lose-message::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: -1;
 }
 
 @keyframes zoomIn {
   0% {
-    transform: translate(-50%, -50%) scale(0);
+    width: 0;
+    height: 0;
     opacity: 0;
   }
-  50% {
+  90% {
     opacity: 1;
+    width: 560px;
+    height: 160px;
   }
   100% {
-    transform: translate(-50%, -50%) scale(1.6);
-    opacity: 0;
+    width: 560px;
+    height: 160px;
+    opacity: 1;
   }
 }
 

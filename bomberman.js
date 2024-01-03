@@ -121,7 +121,7 @@ const moveDown = () => {
 };
 
 const handleMove = (newXY) => {
-  if (hasGameWon) {
+  if (hasGameWon || playerXY === bombXY) {
     return;
   }
   if (!hasVisited(newXY)) {
@@ -286,31 +286,25 @@ const gameOverPage = () => {
 const checkGameOver = () => {
   const noMovePossible = !canMove("up") && !canMove("down") && !canMove("left") && !canMove("right");
 
-  if (playerXY === bombXY) {
+  if (playerXY === bombXY && moveCount <= 15 && !hasGameWon) {
     let daBomb = document.querySelector(".bomb-image");
     daBomb.classList.add("blinking");
+    const loseMessage = document.createElement("div");
+    loseMessage.classList.add("lose-message");
+    loseMessage.textContent = "Oh No! You Lost!";
+
+    gameContainer.appendChild(loseMessage);
+
     setTimeout(() => {
-      alert("Game Over!");
+      loseMessage.remove();
       gameOverPage();
-    }, 80);
+    }, 5000);
   } else if (noMovePossible) {
     setTimeout(() => {
       alert("You locked yourself down bro!");
       gameOverPage();
     }, 80);
   }
-};
-
-// Find out if newXY is within boundaries
-const canMove = (direction) => {
-  if (hasGameWon) {
-    return;
-  }
-  const newRow = rowLabels.indexOf(playerRow) + (direction === "up" ? -1 : direction === "down" ? 1 : 0);
-  const newCol = parseInt(playerCol) + (direction === "left" ? -1 : direction === "right" ? 1 : 0);
-  const newXY = `${rowLabels[newRow]}${newCol}`;
-
-  return newRow >= 0 && newRow < 7 && newCol >= 1 && newCol <= 7 && !hasVisited(newXY);
 };
 
 const checkGameWin = () => {
@@ -332,6 +326,17 @@ const checkGameWin = () => {
       hasGameWon = false;
     }, 5000);
   }
+};
+// Find out if newXY is within boundaries
+const canMove = (direction) => {
+  if (hasGameWon || playerXY === bombXY) {
+    return;
+  }
+  const newRow = rowLabels.indexOf(playerRow) + (direction === "up" ? -1 : direction === "down" ? 1 : 0);
+  const newCol = parseInt(playerCol) + (direction === "left" ? -1 : direction === "right" ? 1 : 0);
+  const newXY = `${rowLabels[newRow]}${newCol}`;
+
+  return newRow >= 0 && newRow < 7 && newCol >= 1 && newCol <= 7 && !hasVisited(newXY);
 };
 
 // COUNTERS
