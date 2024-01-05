@@ -345,7 +345,7 @@ div.win-message {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 2rem;
+  font-size: 1.3rem;
   font-weight: bold;
   color: #3498db;
   animation: zoomIn 4s ease;
@@ -373,10 +373,10 @@ div.lose-message {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 2rem;
+  font-size: 1.7rem;
   font-weight: bold;
   color: #3498db;
-  animation: zoomIn 4s ease;
+  animation: zoomInLose 4s ease;
   width: 0;
   height: 0;
   border-radius: 50px;
@@ -403,11 +403,11 @@ div.lose-message::before {
   90% {
     opacity: 1;
     width: 560px;
-    height: 160px;
+    height: 120px;
   }
   100% {
     width: 560px;
-    height: 160px;
+    height: 120px;
     opacity: 1;
   }
 }
@@ -468,8 +468,10 @@ div.lose-message::before {
 
   img.game-image-lose,
   img.game-image-win {
-    min-width: 300px;
+    min-width: 270px;
     height: auto;
+    max-height: 300px;
+    padding: 5px;
   }
 
   .help-bubble {
@@ -488,5 +490,45 @@ div.lose-message::before {
   #rightButton,
   #downButton {
     touch-action: manipulation;
+  }
+
+  @keyframes zoomIn {
+    0% {
+      width: 0;
+      height: 0;
+      opacity: 0;
+    }
+    90% {
+      opacity: 1;
+      width: 94%;
+      max-width: 100%;
+      height: 120px;
+    }
+    100% {
+      width: 94%;
+      max-width: 100%;
+      height: 120px;
+      opacity: 1;
+    }
+  }
+
+  @keyframes zoomInLose {
+    0% {
+      width: 0;
+      height: 0;
+      opacity: 0;
+    }
+    90% {
+      opacity: 1;
+      width: 60%;
+      max-width: 100%;
+      height: 120px;
+    }
+    100% {
+      width: 60%;
+      max-width: 100%;
+      height: 120px;
+      opacity: 1;
+    }
   }
 }

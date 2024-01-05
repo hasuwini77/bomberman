@@ -291,7 +291,7 @@ const checkGameOver = () => {
     daBomb.classList.add("blinking");
     const loseMessage = document.createElement("div");
     loseMessage.classList.add("lose-message");
-    loseMessage.textContent = "Oh No! You Lost!";
+    loseMessage.textContent = "Oh No!\n You Lost!";
 
     gameContainer.appendChild(loseMessage);
 
