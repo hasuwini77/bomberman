@@ -87,7 +87,19 @@ const moveLeft = () => {
     let leftXY = `${playerRow}${parseInt(playerCol) - 1}`;
     handleMove(leftXY);
   } else {
-    alert("Cannot move left, at the edge of the board.");
+    //Sweet alert2 modal
+    Swal.fire({
+      title: "Cannot move left, at the edge of the board.",
+      icon: "error",
+      showCloseButton: true,
+      confirmButtonText: "OK",
+      backdrop: false,
+      customClass: {
+        container: "swal2-popup custom-alert",
+        title: "swal2-title",
+        confirmButton: "swal2-confirm swal2-styled",
+      },
+    });
   }
 };
 
@@ -96,7 +108,18 @@ const moveRight = () => {
     let rightXY = `${playerRow}${parseInt(playerCol) + 1}`;
     handleMove(rightXY);
   } else {
-    alert("Cannot move right, at the edge of the board.");
+    Swal.fire({
+      title: "Cannot move right, at the edge of the board.",
+      icon: "error",
+      showCloseButton: true,
+      confirmButtonText: "OK",
+      backdrop: false,
+      customClass: {
+        container: "swal2-popup custom-alert",
+        title: "swal2-title",
+        confirmButton: "swal2-confirm swal2-styled",
+      },
+    });
   }
 };
 
@@ -106,7 +129,18 @@ const moveUp = () => {
     let upXY = `${upRow}${playerCol}`;
     handleMove(upXY);
   } else {
-    alert("Cannot move UP, at the edge of the board.");
+    Swal.fire({
+      title: "Cannot move UP, at the edge of the board.",
+      icon: "error",
+      showCloseButton: true,
+      confirmButtonText: "OK",
+      backdrop: false,
+      customClass: {
+        container: "swal2-popup custom-alert",
+        title: "swal2-title",
+        confirmButton: "swal2-confirm swal2-styled",
+      },
+    });
   }
 };
 
@@ -116,7 +150,18 @@ const moveDown = () => {
     let downXY = `${downRow}${playerCol}`;
     handleMove(downXY);
   } else {
-    alert("Cannot move DOWN, at the edge of the board.");
+    Swal.fire({
+      title: "Cannot move Down, at the edge of the board.",
+      icon: "error",
+      showCloseButton: true,
+      confirmButtonText: "OK",
+      backdrop: false,
+      customClass: {
+        container: "swal2-popup custom-alert",
+        title: "swal2-title",
+        confirmButton: "swal2-confirm swal2-styled",
+      },
+    });
   }
 };
 
@@ -301,7 +346,13 @@ const checkGameOver = () => {
     }, 5000);
   } else if (noMovePossible) {
     setTimeout(() => {
-      alert("You locked yourself down bro!");
+      // Replacing alert with SweetAlert2modal
+      Swal.fire({
+        title: "You locked yourself down bro!",
+        icon: "error",
+        showCloseButton: true,
+        confirmButtonText: "OK",
+      });
       gameOverPage();
     }, 80);
   }
