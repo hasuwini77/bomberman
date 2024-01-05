@@ -205,7 +205,18 @@ const handleMove = (newXY) => {
       console.log("We cannot move there");
     }
   } else {
-    alert("Already visited this square");
+    Swal.fire({
+      title: "Already visited this square.",
+      icon: "question",
+      showCloseButton: true,
+      confirmButtonText: "OK",
+      backdrop: false,
+      customClass: {
+        container: "swal2-popup custom-alert",
+        title: "swal2-title",
+        confirmButton: "swal2-confirm swal2-styled",
+      },
+    });
   }
 };
 const mobileMovement = () => {
